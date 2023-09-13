@@ -33,6 +33,8 @@ interface Props {
 
 const AccountProfile = ({ user, btnTitle }: Props) => {
 
+	const [files, setFiles] = useState<File[]>([]);
+
 	const form = useForm({
 		resolver: zodResolver(UserValidation),
 		defaultValues: {
@@ -189,5 +191,6 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
 			</Form>
 		)
 	}
+}
 
 	export default AccountProfile;
