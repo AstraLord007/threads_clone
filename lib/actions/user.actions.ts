@@ -19,26 +19,40 @@ export async function updateUser({
     name,
     bio,
     image,
-    path}: Params): Promise<void>{
+    path }: Params): Promise<void> {
+    connectToDB();
+
+    try {
+        await User.findOneAndUpdate(
+            { id: userId },
+            {
+                username: username.toLowerCase(),
+                name,
+                bio,
+                image,
+                onboarded: true,
+            },
+            { upsert: true },
+        );
+        if (path === '/profile/edit') {
+            revalidatePath(path);
+        }
+    } catch (error: any) {
+        throw new Error(`Failed to create/update user: ${error.message}`)
+    }
+
+}
+
+export async function fetchUser(userId: string) {
+    try {
         connectToDB();
 
-        try {
-            await User.findOneAndUpdate(
-                { id: userId },
-                {
-                    username: username.toLowerCase(),
-                    name,
-                    bio,
-                    image,
-                    onboarded: true,
-                },
-                { upsert: true },
-            );
-            if(path === '/profile/edit') {
-                revalidatePath(path);
-            }
-        } catch (error: any) {
-            throw new Error(`Failed to create/update user: ${error.message}`)
-        }
-    
+        return await User.findOne({ id: userId })
+        //     .populate({
+        //     path: "communities",
+        //     model: Community,
+        // });
+    } catch (error: any) {
+        throw new Error(`Failed to fetch user: ${error.message}`);
+    }
 }
