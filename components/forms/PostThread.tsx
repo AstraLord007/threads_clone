@@ -44,10 +44,15 @@ function PostThread({ userId }: { userId: string }) {
 			accounId: userId,
 		},
 	});
+
+	const onSubmit= () => {
+
+	}
+
 	return (
 		<Form {...form}>
 			<form
-				className='flex flex-col justify-start gap-10'
+				className='mt-10 flex flex-col justify-start gap-10'
 				onSubmit={form.handleSubmit(onSubmit)}
 			></form>
 
@@ -69,6 +74,10 @@ function PostThread({ userId }: { userId: string }) {
 					</FormItem>
 				)}
 			/>
+
+			<Button type="submit" className="bg-primary-500">
+					Post Thread
+			</Button>
 		</Form>
 	)
 }
