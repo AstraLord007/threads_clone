@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { usePathname, useRouter } from "next/navigation";
 
 // import { updateUser } from "@/lib/actions/user.actions";
-// import { UserValidation } from "@/lib/validations/user";
+import { ThreadValidation } from "@/lib/validations/thread";
 
 import {
     Form,
@@ -38,7 +38,7 @@ function PostThread({ userId }: { userId: string }) {
   	const pathname = usePathname();
 
 	const form = useForm({
-		resolver: zodResolver(),
+		resolver: zodResolver(ThreadValidation),
 		defaultValues: {
 			thread: '',
             accounId: userId,
